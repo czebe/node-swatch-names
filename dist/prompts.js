@@ -1,0 +1,79 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.jsPath = exports.scssPath = exports.initialize = exports.outputPath = exports.overwrite = exports.swatch = exports.newPath = exports.differentPath = undefined;
+
+var _lodash = require('lodash');
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const differentPath = exports.differentPath = {
+	type: 'confirm',
+	name: 'differentPath',
+	message: 'Would you like to specify a different path?',
+	default: true
+};
+
+const newPath = exports.newPath = root => ({
+	type: 'path',
+	name: 'newPath',
+	cwd: root,
+	directoryOnly: true,
+	message: 'Path to your swatches:',
+	default: root,
+	when: answers => answers.differentPath
+});
+
+const swatch = exports.swatch = (files, fileName) => ({
+	type: 'autocomplete',
+	name: 'swatch',
+	message: 'Which swatch file do you want to process?',
+	source: (_, input) => Promise.resolve(files.filter(file => !input || file.value.toLowerCase().indexOf(input.toLowerCase()) >= 0)),
+	when: !fileName
+});
+
+const overwrite = exports.overwrite = {
+	type: 'confirm',
+	name: 'overwrite',
+	message: 'Overwrite swatch file?',
+	default: false
+};
+
+const outputPath = exports.outputPath = def => ({
+	type: 'input',
+	name: 'outputPath',
+	message: 'Filename of the new swatch file:',
+	default: def,
+	when: answers => !answers.overwrite
+});
+
+const initialize = exports.initialize = skipInit => ({
+	type: 'confirm',
+	name: 'initialize',
+	message: 'Initialize watcher for this swatch file?',
+	default: true,
+	when: !skipInit
+});
+
+const scssPath = exports.scssPath = (root, noSave) => ({
+	type: 'path',
+	name: 'scssPath',
+	message: 'Save SCSS file with color variables to: (leave this empty if SCSS output is not needed)',
+	cwd: root,
+	validate: answer => answer === root || _lodash2.default.endsWith(answer.toLowerCase(), '.scss') ? true : red.bold('Invalid .scss file path. Enter a valid file path relative to project root.'),
+	filter: answer => answer === root ? noSave : answer
+});
+
+const jsPath = exports.jsPath = (root, noSave) => ({
+	type: 'path',
+	name: 'jsPath',
+	message: 'Save JS file with color variables to: (leave this empty if JS output is not needed)',
+	cwd: root,
+	validate: answer => answer === root || _lodash2.default.endsWith(answer.toLowerCase(), '.js') ? true : red.bold('Invalid .js file path. Enter a valid file path relative to project root.'),
+	filter: answer => answer === root ? noSave : answer
+});
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9wcm9tcHRzLmpzIl0sIm5hbWVzIjpbImRpZmZlcmVudFBhdGgiLCJ0eXBlIiwibmFtZSIsIm1lc3NhZ2UiLCJkZWZhdWx0IiwibmV3UGF0aCIsInJvb3QiLCJjd2QiLCJkaXJlY3RvcnlPbmx5Iiwid2hlbiIsImFuc3dlcnMiLCJzd2F0Y2giLCJmaWxlcyIsImZpbGVOYW1lIiwic291cmNlIiwiXyIsImlucHV0IiwiUHJvbWlzZSIsInJlc29sdmUiLCJmaWx0ZXIiLCJmaWxlIiwidmFsdWUiLCJ0b0xvd2VyQ2FzZSIsImluZGV4T2YiLCJvdmVyd3JpdGUiLCJvdXRwdXRQYXRoIiwiZGVmIiwiaW5pdGlhbGl6ZSIsInNraXBJbml0Iiwic2Nzc1BhdGgiLCJub1NhdmUiLCJ2YWxpZGF0ZSIsImFuc3dlciIsImVuZHNXaXRoIiwicmVkIiwiYm9sZCIsImpzUGF0aCJdLCJtYXBwaW5ncyI6Ijs7Ozs7OztBQUFBOzs7Ozs7QUFFTyxNQUFNQSx3Q0FBZ0I7QUFDNUJDLE9BQU0sU0FEc0I7QUFFNUJDLE9BQU0sZUFGc0I7QUFHNUJDLFVBQVMsNkNBSG1CO0FBSTVCQyxVQUFTO0FBSm1CLENBQXRCOztBQU9BLE1BQU1DLDRCQUFXQyxJQUFELEtBQVc7QUFDakNMLE9BQU0sTUFEMkI7QUFFakNDLE9BQU0sU0FGMkI7QUFHakNLLE1BQUtELElBSDRCO0FBSWpDRSxnQkFBZSxJQUprQjtBQUtqQ0wsVUFBUyx3QkFMd0I7QUFNakNDLFVBQVNFLElBTndCO0FBT2pDRyxPQUFPQyxPQUFELElBQWFBLFFBQVFWO0FBUE0sQ0FBWCxDQUFoQjs7QUFVQSxNQUFNVywwQkFBUyxDQUFDQyxLQUFELEVBQVFDLFFBQVIsTUFBc0I7QUFDM0NaLE9BQU0sY0FEcUM7QUFFM0NDLE9BQU0sUUFGcUM7QUFHM0NDLFVBQVMsMkNBSGtDO0FBSTNDVyxTQUFRLENBQUNDLENBQUQsRUFBSUMsS0FBSixLQUFjQyxRQUFRQyxPQUFSLENBQ3JCTixNQUFNTyxNQUFOLENBQWFDLFFBQVEsQ0FBQ0osS0FBRCxJQUFVSSxLQUFLQyxLQUFMLENBQVdDLFdBQVgsR0FBeUJDLE9BQXpCLENBQWlDUCxNQUFNTSxXQUFOLEVBQWpDLEtBQXlELENBQXhGLENBRHFCLENBSnFCO0FBTzNDYixPQUFNLENBQUNJO0FBUG9DLENBQXRCLENBQWY7O0FBVUEsTUFBTVcsZ0NBQVk7QUFDeEJ2QixPQUFNLFNBRGtCO0FBRXhCQyxPQUFNLFdBRmtCO0FBR3hCQyxVQUFTLHdCQUhlO0FBSXhCQyxVQUFTO0FBSmUsQ0FBbEI7O0FBT0EsTUFBTXFCLGtDQUFjQyxHQUFELEtBQVU7QUFDbkN6QixPQUFNLE9BRDZCO0FBRW5DQyxPQUFNLFlBRjZCO0FBR25DQyxVQUFTLGtDQUgwQjtBQUluQ0MsVUFBU3NCLEdBSjBCO0FBS25DakIsT0FBT0MsT0FBRCxJQUFhLENBQUNBLFFBQVFjO0FBTE8sQ0FBVixDQUFuQjs7QUFRQSxNQUFNRyxrQ0FBY0MsUUFBRCxLQUFlO0FBQ3hDM0IsT0FBTSxTQURrQztBQUV4Q0MsT0FBTSxZQUZrQztBQUd4Q0MsVUFBUywwQ0FIK0I7QUFJeENDLFVBQVMsSUFKK0I7QUFLeENLLE9BQU0sQ0FBQ21CO0FBTGlDLENBQWYsQ0FBbkI7O0FBUUEsTUFBTUMsOEJBQVcsQ0FBQ3ZCLElBQUQsRUFBT3dCLE1BQVAsTUFBbUI7QUFDMUM3QixPQUFNLE1BRG9DO0FBRTFDQyxPQUFNLFVBRm9DO0FBRzFDQyxVQUFTLHlGQUhpQztBQUkxQ0ksTUFBS0QsSUFKcUM7QUFLMUN5QixXQUFVQyxVQUFVQSxXQUFXMUIsSUFBWCxJQUFtQixpQkFBRTJCLFFBQUYsQ0FBV0QsT0FBT1YsV0FBUCxFQUFYLEVBQWlDLE9BQWpDLENBQW5CLEdBQStELElBQS9ELEdBQXNFWSxJQUFJQyxJQUFKLENBQVMsNEVBQVQsQ0FMaEQ7QUFNMUNoQixTQUFRYSxVQUFVQSxXQUFXMUIsSUFBWCxHQUFrQndCLE1BQWxCLEdBQTJCRTtBQU5ILENBQW5CLENBQWpCOztBQVNBLE1BQU1JLDBCQUFTLENBQUM5QixJQUFELEVBQU93QixNQUFQLE1BQW1CO0FBQ3hDN0IsT0FBTSxNQURrQztBQUV4Q0MsT0FBTSxRQUZrQztBQUd4Q0MsVUFBUyxxRkFIK0I7QUFJeENJLE1BQUtELElBSm1DO0FBS3hDeUIsV0FBVUMsVUFBVUEsV0FBVzFCLElBQVgsSUFBbUIsaUJBQUUyQixRQUFGLENBQVdELE9BQU9WLFdBQVAsRUFBWCxFQUFpQyxLQUFqQyxDQUFuQixHQUE2RCxJQUE3RCxHQUFvRVksSUFBSUMsSUFBSixDQUFTLDBFQUFULENBTGhEO0FBTXhDaEIsU0FBUWEsVUFBVUEsV0FBVzFCLElBQVgsR0FBa0J3QixNQUFsQixHQUEyQkU7QUFOTCxDQUFuQixDQUFmIiwiZmlsZSI6InByb21wdHMuanMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgXyBmcm9tICdsb2Rhc2gnO1xuXG5leHBvcnQgY29uc3QgZGlmZmVyZW50UGF0aCA9IHtcblx0dHlwZTogJ2NvbmZpcm0nLFxuXHRuYW1lOiAnZGlmZmVyZW50UGF0aCcsXG5cdG1lc3NhZ2U6ICdXb3VsZCB5b3UgbGlrZSB0byBzcGVjaWZ5IGEgZGlmZmVyZW50IHBhdGg/Jyxcblx0ZGVmYXVsdDogdHJ1ZVxufTtcblxuZXhwb3J0IGNvbnN0IG5ld1BhdGggPSAocm9vdCkgPT4gKHtcblx0dHlwZTogJ3BhdGgnLFxuXHRuYW1lOiAnbmV3UGF0aCcsXG5cdGN3ZDogcm9vdCxcblx0ZGlyZWN0b3J5T25seTogdHJ1ZSxcblx0bWVzc2FnZTogJ1BhdGggdG8geW91ciBzd2F0Y2hlczonLFxuXHRkZWZhdWx0OiByb290LFxuXHR3aGVuOiAoYW5zd2VycykgPT4gYW5zd2Vycy5kaWZmZXJlbnRQYXRoXG59KTtcblxuZXhwb3J0IGNvbnN0IHN3YXRjaCA9IChmaWxlcywgZmlsZU5hbWUpID0+ICh7XG5cdHR5cGU6ICdhdXRvY29tcGxldGUnLFxuXHRuYW1lOiAnc3dhdGNoJyxcblx0bWVzc2FnZTogJ1doaWNoIHN3YXRjaCBmaWxlIGRvIHlvdSB3YW50IHRvIHByb2Nlc3M/Jyxcblx0c291cmNlOiAoXywgaW5wdXQpID0+IFByb21pc2UucmVzb2x2ZShcblx0XHRmaWxlcy5maWx0ZXIoZmlsZSA9PiAhaW5wdXQgfHwgZmlsZS52YWx1ZS50b0xvd2VyQ2FzZSgpLmluZGV4T2YoaW5wdXQudG9Mb3dlckNhc2UoKSkgPj0gMClcblx0KSxcblx0d2hlbjogIWZpbGVOYW1lXG59KTtcblxuZXhwb3J0IGNvbnN0IG92ZXJ3cml0ZSA9IHtcblx0dHlwZTogJ2NvbmZpcm0nLFxuXHRuYW1lOiAnb3ZlcndyaXRlJyxcblx0bWVzc2FnZTogJ092ZXJ3cml0ZSBzd2F0Y2ggZmlsZT8nLFxuXHRkZWZhdWx0OiBmYWxzZVxufTtcblxuZXhwb3J0IGNvbnN0IG91dHB1dFBhdGggPSAoZGVmKSA9PiAoe1xuXHR0eXBlOiAnaW5wdXQnLFxuXHRuYW1lOiAnb3V0cHV0UGF0aCcsXG5cdG1lc3NhZ2U6ICdGaWxlbmFtZSBvZiB0aGUgbmV3IHN3YXRjaCBmaWxlOicsXG5cdGRlZmF1bHQ6IGRlZixcblx0d2hlbjogKGFuc3dlcnMpID0+ICFhbnN3ZXJzLm92ZXJ3cml0ZVxufSk7XG5cbmV4cG9ydCBjb25zdCBpbml0aWFsaXplID0gKHNraXBJbml0KSA9PiAoe1xuXHR0eXBlOiAnY29uZmlybScsXG5cdG5hbWU6ICdpbml0aWFsaXplJyxcblx0bWVzc2FnZTogJ0luaXRpYWxpemUgd2F0Y2hlciBmb3IgdGhpcyBzd2F0Y2ggZmlsZT8nLFxuXHRkZWZhdWx0OiB0cnVlLFxuXHR3aGVuOiAhc2tpcEluaXRcbn0pO1xuXG5leHBvcnQgY29uc3Qgc2Nzc1BhdGggPSAocm9vdCwgbm9TYXZlKSA9PiAoe1xuXHR0eXBlOiAncGF0aCcsXG5cdG5hbWU6ICdzY3NzUGF0aCcsXG5cdG1lc3NhZ2U6ICdTYXZlIFNDU1MgZmlsZSB3aXRoIGNvbG9yIHZhcmlhYmxlcyB0bzogKGxlYXZlIHRoaXMgZW1wdHkgaWYgU0NTUyBvdXRwdXQgaXMgbm90IG5lZWRlZCknLFxuXHRjd2Q6IHJvb3QsXG5cdHZhbGlkYXRlOiBhbnN3ZXIgPT4gYW5zd2VyID09PSByb290IHx8IF8uZW5kc1dpdGgoYW5zd2VyLnRvTG93ZXJDYXNlKCksICcuc2NzcycpID8gdHJ1ZSA6IHJlZC5ib2xkKCdJbnZhbGlkIC5zY3NzIGZpbGUgcGF0aC4gRW50ZXIgYSB2YWxpZCBmaWxlIHBhdGggcmVsYXRpdmUgdG8gcHJvamVjdCByb290LicpLFxuXHRmaWx0ZXI6IGFuc3dlciA9PiBhbnN3ZXIgPT09IHJvb3QgPyBub1NhdmUgOiBhbnN3ZXJcbn0pO1xuXG5leHBvcnQgY29uc3QganNQYXRoID0gKHJvb3QsIG5vU2F2ZSkgPT4gKHtcblx0dHlwZTogJ3BhdGgnLFxuXHRuYW1lOiAnanNQYXRoJyxcblx0bWVzc2FnZTogJ1NhdmUgSlMgZmlsZSB3aXRoIGNvbG9yIHZhcmlhYmxlcyB0bzogKGxlYXZlIHRoaXMgZW1wdHkgaWYgSlMgb3V0cHV0IGlzIG5vdCBuZWVkZWQpJyxcblx0Y3dkOiByb290LFxuXHR2YWxpZGF0ZTogYW5zd2VyID0+IGFuc3dlciA9PT0gcm9vdCB8fCBfLmVuZHNXaXRoKGFuc3dlci50b0xvd2VyQ2FzZSgpLCAnLmpzJykgPyB0cnVlIDogcmVkLmJvbGQoJ0ludmFsaWQgLmpzIGZpbGUgcGF0aC4gRW50ZXIgYSB2YWxpZCBmaWxlIHBhdGggcmVsYXRpdmUgdG8gcHJvamVjdCByb290LicpLFxuXHRmaWx0ZXI6IGFuc3dlciA9PiBhbnN3ZXIgPT09IHJvb3QgPyBub1NhdmUgOiBhbnN3ZXJcbn0pOyJdfQ==

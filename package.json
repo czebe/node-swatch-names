@@ -1,0 +1,51 @@
+{
+  "name": "node-swatch-names",
+  "version": "1.0.0",
+  "description": "Swatch-names automatically and consistently names Photoshop swatches to be shared among frontend developers and designers. Exports colors to SASS variables and JSON for use in code.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "develop": "npm-watch",
+    "build": "babel src -d dist"
+  },
+  "watch": {
+    "build": "src"
+  },
+  "keywords": [
+    "Photoshop",
+    "swatch",
+    "colors",
+    "color-names"
+  ],
+  "bin": {
+    "swatch-names": "dist/cli.js"
+  },
+  "author": {
+    "name": "Marton Czebe",
+    "email": "czebemarci@gmail.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^2.1.0",
+    "color-namer": "^1.3.0",
+    "glob": "^7.1.2",
+    "inquirer": "^3.3.0",
+    "inquirer-autocomplete-prompt": "^0.11.1",
+    "inquirer-path": "^1.0.0-beta5",
+    "lodash": "^4.17.4",
+    "meow": "^3.7.0",
+    "minimist": "^1.2.0",
+    "npm-watch": "^0.3.0",
+    "ora": "^1.3.0",
+    "read-pkg-up": "^2.0.0",
+    "write-pkg": "^3.1.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-es2015-spread": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.0"
+  },
+  "readme": "ERROR: No README data found!",
+  "_id": "node-swatch-names@1.0.0"
+}

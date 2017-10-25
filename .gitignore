@@ -1,0 +1,37 @@
+# WebStorm settings
+.idea/
+
+# MEGA
+.debris/
+
+# Environment variables
+*.env
+*.env.js
+
+# SublimeText
+*.sublime-workspace
+
+# OS X
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# SASS
+*.sass-cache
+inline
+
+# Node.js modules
+node_modules/
+
+# TEMP
+temp/
+
+# TEST DATA
+test/
