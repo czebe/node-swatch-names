@@ -4,6 +4,9 @@
 # MEGA
 .debris/
 
+# dist
+dist/
+
 # Environment variables
 *.env
 *.env.js
@@ -16,6 +19,7 @@
 .AppleDouble
 .LSOverride
 ._*
+Icon
 
 # Windows
 Thumbs.db
