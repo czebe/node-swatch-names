@@ -4,9 +4,6 @@
 # MEGA
 .debris/
 
-# dist
-dist/
-
 # Environment variables
 *.env
 *.env.js
@@ -36,9 +33,7 @@ node_modules/
 
 # TEMP
 temp/
-
-# TEST DATA
-test/
+tmp/
 
 # build
 dist/

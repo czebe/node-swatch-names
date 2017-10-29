@@ -46,12 +46,10 @@ const extractPalette = (data) => {
 
 	const palette = split(protocolTwoColorsChunks);
 
-	// console.log(palette);
-
 	return palette;
 };
 
-function toJSON(file, callback) {
+const toJSON = (file, callback) => {
 	fs.readFile(
 		file, 'hex',
 		(error, data) => {
@@ -62,6 +60,4 @@ function toJSON(file, callback) {
 	);
 };
 
-module.exports = {
-	toJSON,
-};
+export default toJSON;
