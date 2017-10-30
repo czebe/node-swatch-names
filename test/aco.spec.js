@@ -10,10 +10,7 @@ describe('aco', () => {
 	describe('decoding', async () => {
 
 		before(async () => {
-			await readFile('test/fixtures/swatch-bw.aco')
-				.then((data) => {
-					swatchBw = data;
-				});
+			swatchBw = await readFile('test/fixtures/swatch-bw.aco');
 		});
 
 		it('should decode binary data from .aco file', () => {

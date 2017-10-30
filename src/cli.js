@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 /* eslint-disable no-console */
 
-import { join, relative, isAbsolute, basename, extname, dirname, resolve } from 'path';
-import { cyan, green, red } from 'chalk';
+import {join, relative, isAbsolute, basename, extname, dirname, resolve} from 'path';
+import {cyan, green, red} from 'chalk';
 import inquirer from 'inquirer';
 import autocomplete from 'inquirer-autocomplete-prompt';
-import { PathPrompt } from 'inquirer-path';
+import {PathPrompt} from 'inquirer-path';
 import writePkg from 'write-pkg';
 import readPkgUp from 'read-pkg-up';
 import meow from 'meow';
@@ -14,8 +14,8 @@ import minimist from 'minimist';
 import _ from 'lodash';
 
 import * as Prompts from './lib/prompts';
-import { processSwatch } from './lib/swatch-names';
-import { listAcoFiles } from './lib/io';
+import {processSwatch} from './lib/swatch-names';
+import {listAcoFiles} from './lib/io';
 
 const cli = meow(`
 	Usage

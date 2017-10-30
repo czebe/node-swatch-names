@@ -1,15 +1,7 @@
-import fs from 'fs';
+import fs from 'fs-extra';
+import {dirname} from 'path';
 import glob from 'glob';
 import {green} from 'chalk';
-
-const sanitizeFilename = (fileName, extension) => {
-	fileName = fileName || 'swatch-names-output-' + new Date() + extension;
-	if (fileName.lastIndexOf(extension) !== fileName.length - 4) {
-		fileName = fileName + extension;
-	}
-	return fileName;
-};
-
 
 export const listAcoFiles = (root) => {
 	const pattern = '**/*.aco';
@@ -28,25 +20,21 @@ export const listAcoFiles = (root) => {
 export const readFile = (file) => {
 	return new Promise((resolve, reject) => {
 		fs.readFile(file, 'hex', (err, data) => {
-			if (err) {
-				throw new Error(err);
-				return reject(err);
-			}
+			if (err) return reject(err);
 			resolve(data);
 		});
 	});
 };
 
-export const saveFile = (data, fileName, enforceExtension, message = '') => {
-	if (enforcedExtension) {
-		fileName = sanitizeFilename(fileName, enforcedExtension);
-	}
-
+export const saveFile = (data, fileName, message = 'File saved to: ') => {
 	return new Promise((resolve, reject) => {
-		fs.writeFile(fileName, data, (err) => {
-			if (err) return reject(err);
-			console.log(green.bold(message + fileName));
-			resolve();
-		});
+		fs.ensureDir(dirname(fileName))
+			.then(() => {
+				fs.writeFile(fileName, data, (err) => {
+					if (err) return reject(err);
+					console.log(green.bold(message + fileName));
+					resolve();
+				});
+			});
 	});
 };
