@@ -29,22 +29,22 @@ describe('swatch-names', () => {
 	describe('getColorNames()', () => {
 
 		it('should return correct color names for hex color codes', () => {
-			const colors = _.map(_.sampleSize(colorList, 30), c => ({name: sanitizeColorName(c.name), hex: c.hex.toUpperCase()}));
+			const colors = _.map(_.sampleSize(colorList, 50), c => ({name: sanitizeColorName(c.name), hex: c.hex.toUpperCase()}));
 			const namedColors = getColorNames(colors.map((c) => c.hex));
 
 			expect(namedColors).to.deep.equal(colors);
 			expect(getColorNames('#B78727')).to.deep.equal([{name: 'university-of-california-gold', hex: '#B78727'}]);
-		});
+		}).timeout(5000);
 
-		it('should throw an error when incorrect hex code or wrong argument format is supplied', () => {
-			expect(() => getColorNames(['#fff'])).throw();
-			expect(() => getColorNames(['#fffff'])).throw();
-			expect(() => getColorNames(['#gg0101'])).throw();
-			expect(() => getColorNames(['ffffff'])).throw();
-			expect(() => getColorNames('ffffff')).throw();
-			expect(() => getColorNames('')).throw();
-			expect(() => getColorNames([])).throw();
-			expect(() => getColorNames({hex: '#ffffff'})).throw();
+		it('should throw an error when incorrect hex code or wrong argument type is supplied', () => {
+			expect(() => getColorNames(['#fff'])).to.throw();
+			expect(() => getColorNames(['#fffff'])).to.throw();
+			expect(() => getColorNames(['#gg0101'])).to.throw();
+			expect(() => getColorNames(['ffffff'])).to.throw();
+			expect(() => getColorNames('ffffff')).to.throw();
+			expect(() => getColorNames('')).to.throw();
+			expect(() => getColorNames([])).to.throw();
+			expect(() => getColorNames({hex: '#ffffff'})).to.throw();
 		});
 
 	});

@@ -1,7 +1,15 @@
 import fs from 'fs';
 import glob from 'glob';
-import { green } from 'chalk';
-import acoWriter from './acoWriter';
+import {green} from 'chalk';
+
+const sanitizeFilename = (fileName, extension) => {
+	fileName = fileName || 'swatch-names-output-' + new Date() + extension;
+	if (fileName.lastIndexOf(extension) !== fileName.length - 4) {
+		fileName = fileName + extension;
+	}
+	return fileName;
+};
+
 
 export const listAcoFiles = (root) => {
 	const pattern = '**/*.aco';
@@ -17,23 +25,27 @@ export const listAcoFiles = (root) => {
 	});
 };
 
-export const saveSwatch = (fileName, colors) => {
+export const readFile = (file) => {
 	return new Promise((resolve, reject) => {
-		acoWriter.make(fileName, colors, function(err, aco) {
-			if (err) return reject(err);
-			aco.on('finish', function() {
-				console.log(green.bold('Swatch file saved to: ' + aco.path));
-				resolve();
-			});
+		fs.readFile(file, 'hex', (err, data) => {
+			if (err) {
+				throw new Error(err);
+				return reject(err);
+			}
+			resolve(data);
 		});
 	});
 };
 
-export const saveFile = (data, file, message) => {
+export const saveFile = (data, fileName, enforceExtension, message = '') => {
+	if (enforcedExtension) {
+		fileName = sanitizeFilename(fileName, enforcedExtension);
+	}
+
 	return new Promise((resolve, reject) => {
-		fs.writeFile(file, data, (err) => {
+		fs.writeFile(fileName, data, (err) => {
 			if (err) return reject(err);
-			console.log(green.bold(message + file));
+			console.log(green.bold(message + fileName));
 			resolve();
 		});
 	});
