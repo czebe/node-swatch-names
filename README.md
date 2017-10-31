@@ -61,7 +61,4 @@ Use `npm run develop` while coding and `npm run test` to run unit tests.
 
 ## License
 
-MIT ? [Marton Czebe](https://github.com/czebe)
-
-// https://raw.githubusercontent.com/lemieuxster/node-aco/master/aco.js
-//
+MIT &copy; [Marton Czebe](https://github.com/czebe)
