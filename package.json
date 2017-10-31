@@ -4,6 +4,7 @@
   "description": "Swatch-names automatically and consistently names Photoshop swatches to be shared among frontend developers and designers. Exports colors to SASS variables and JSON for use in code.",
   "main": "index.js",
   "scripts": {
+    "pretest": "npm run build",
     "test": "mocha --require babel-register './test/**/*.spec.js'",
     "develop": "npm-watch",
     "build": "babel src -d dist"
@@ -19,6 +20,9 @@
   ],
   "bin": {
     "swatch-names": "dist/cli.js"
+  },
+  "engines": {
+    "node": ">=6"
   },
   "author": {
     "name": "Marton Czebe",
@@ -51,7 +55,8 @@
     "babel-register": "^6.26.0",
     "chai": "^4.1.2",
     "fs-extra": "^4.0.2",
-    "mocha": "^4.0.1"
+    "mocha": "^4.0.1",
+    "suppose": "^0.6.2"
   },
   "readme": "ERROR: No README data found!",
   "_id": "node-swatch-names@1.0.0"

@@ -5,6 +5,12 @@ const COLOR_SIZE = 5;
 
 // ### DECODING ###
 
+/**
+ * Decodes ACO file
+ *
+ * @param data - A Buffer with the swatch file contents
+ * @returns {Array} - Array of decoded color swatches: [{name: 'red', hex: '#ff0000', r: 255, g: 0, b: 0}, ...]
+ */
 const decode = (data) => {
 	const parts = data.match(/.{1,4}/g);
 	const [version, numberOfColorsHex, ...rest] = parts;
@@ -24,7 +30,7 @@ const decode = (data) => {
 
 		const getHex = (color) => color.slice(0, 2);
 		const hex = `#${getHex(w)}${getHex(x)}${getHex(y)}`;
-		const color = {name, hex, w, x, y};
+		const color = {name, hex, r: parseInt(getHex(w), 16), g: parseInt(getHex(x), 16), b: parseInt(getHex(y), 16)};
 		const nextColor = rest.slice(nameSize);
 
 		return nextColor.length ? [color, ...split(nextColor)] : [color];
@@ -74,7 +80,7 @@ const writeColors = (colors, writeNames = false) => {
 
 	colors.forEach((color) => {
 		try {
-			const hex = color.color;
+			const hex = color.hex;
 			const name = color.name || hex;
 
 			//Parse RGB

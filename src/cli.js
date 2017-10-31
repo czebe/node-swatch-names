@@ -15,7 +15,8 @@ import _ from 'lodash';
 
 import * as Prompts from './lib/prompts';
 import {processSwatch} from './lib/swatch-names';
-import {listAcoFiles} from './lib/io';
+import {listFiles, readFile, saveFile} from './lib/io';
+import {decode, encode} from './lib/aco';
 
 const cli = meow(`
 	Usage
@@ -24,8 +25,10 @@ const cli = meow(`
 	Options
 		--init Performs adding watch script only, modifies package.json
 		--swatch [path] Converts the specified swatch file
+		--output [path] Output file path for the named .aco file
 		--scss [path] Saves SCSS color names to the specified file
 		--js [path] Saves JS color names to the specified file
+		--overwrite Overwrite swatch file
 		
 	Examples
 		$ swatch-names
@@ -41,9 +44,31 @@ const root = process.cwd();
 inquirer.registerPrompt('path', PathPrompt);
 inquirer.registerPrompt('autocomplete', autocomplete);
 
+const convertFile = (input, output, scss, js) => {
+
+	let processed;
+
+	return new Promise((resolve, reject) => {
+		readFile(input)
+			.then((data) => {
+				processed = processSwatch(decode(data));
+				return saveFile(encode(processed.colors), output, 'Swatch file written to: ')
+			})
+			.then(() => {
+				return scss ? saveFile(processed.scss, scss, 'SCSS file written to: ') : Promise.resolve();
+			})
+			.then(() => {
+				return js ? saveFile(processed.js, js, 'JS file written to: ') : Promise.resolve();
+			})
+			.then(() => {
+				resolve();
+			});
+	});
+};
+
 const convertSwatch = async (skipInit) => {
 	const spinner = ora(`Scanning ${green(root)} for swatch files (*.aco)...`).start();
-	const files = await listAcoFiles(root);
+	const files = await listFiles(root);
 	spinner.stop();
 
 	if (!files.length) {
@@ -70,7 +95,7 @@ const convertSwatch = async (skipInit) => {
 				Prompts.initialize(skipInit)
 			]).then((answers) => {
 				const output = answers.overwrite ? swatchFile : answers.outputPath;
-				processSwatch(swatchFile, null, null, output)
+				convertFile(swatchFile, output)
 					.then(() => {
 						if (answers.initialize) {
 							initializeWatcher(swatchFile);
@@ -176,15 +201,14 @@ const swatchNamesCli = (flags) => {
 				const swatchFile = relative(root, resolve(swatch));
 				const scssPath = _.isArray(scss) ? (scss.length === swatches.length ? scss[index] : scss[0]) : scss;
 				const jsPath = _.isArray(js) ? (js.length === swatches.length ? js[index] : js[0]) : js;
-				const output = flags.overwrite ? swatchFile : join(dirname(swatchFile), basename(swatchFile, extname(swatchFile)) + '-named.aco');
-
-				processSwatch(swatchFile, scssPath, jsPath, output);
+				const output = flags.overwrite ? swatchFile : flags.output ? flags.output : join(dirname(swatchFile), basename(swatchFile, extname(swatchFile)) + '-named.aco');
+				convertFile(swatchFile, output, scssPath, jsPath);
 			});
 		} else {
 			if (_.isArray(scss) || _.isArray(js)) throw new Error(red.bold('Wrong number of output arguments supplied. One swatch file can be converted to one SCSS and one JS file only.'));
 			const swatchFile = relative(root, resolve(swatches));
-			const output = flags.overwrite ? swatchFile : join(dirname(swatchFile), basename(swatchFile, extname(swatchFile)) + '-named.aco');
-			processSwatch(swatchFile, scss, js, output);
+			const output = flags.overwrite ? swatchFile : flags.output ? flags.output : join(dirname(swatchFile), basename(swatchFile, extname(swatchFile)) + '-named.aco');
+			convertFile(swatchFile, output, scss, js);
 		}
 	} else {
 		convertSwatch();

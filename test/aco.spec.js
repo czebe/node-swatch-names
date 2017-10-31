@@ -7,18 +7,29 @@ describe('aco', () => {
 
 	let swatchBw;
 
+	before(async () => {
+		swatchBw = await readFile('test/fixtures/swatch-bw.aco');
+	});
+
 	describe('decoding', async () => {
 
-		before(async () => {
-			swatchBw = await readFile('test/fixtures/swatch-bw.aco');
+		let decoded;
+
+		before(() => {
+			decoded = decode(swatchBw);
 		});
 
 		it('should decode binary data from .aco file', () => {
-			const decoded = decode(swatchBw);
 			expect(decoded[0].name).to.equal('Black');
 			expect(decoded[0].hex).to.equal('#000000');
 			expect(decoded[1].name).to.equal('White');
 			expect(decoded[1].hex).to.equal('#ffffff');
+		});
+
+		it('should decode RGB values from .aco file', () => {
+			expect(decoded[1].r).to.equal(255);
+			expect(decoded[1].g).to.equal(255);
+			expect(decoded[1].b).to.equal(255);
 		});
 
 	});

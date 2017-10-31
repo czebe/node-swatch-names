@@ -1,25 +1,15 @@
 import {expect} from 'chai';
 import fs, {remove} from 'fs-extra';
 
-import {saveFile, readFile} from '../src/lib/io';
+import { saveFile, readFile, listFiles } from '../src/lib/io';
 
 describe('io', () => {
 
-	describe('saveFile()', () => {
+	describe('listFiles()', () => {
 
-		beforeEach(async () => {
-			await remove('test/tmp');
-		});
-
-		after(async () => {
-			await remove('test/tmp');
-		});
-
-		it('should save file with correct extension', async () => {
-			const fileName = 'test/tmp/saved.aco';
-			await saveFile('', fileName);
-			const fileExists = fs.existsSync(fileName);
-			expect(fileExists).to.equal(true);
+		it('should list .aco files below supplied root', async () => {
+			const files = await listFiles('test');
+			expect(files.length).to.be.greaterThan(0);
 		});
 
 	});
@@ -39,6 +29,25 @@ describe('io', () => {
 				.catch((err) => {
 					expect(err).to.be.an('error');
 				});
+		});
+
+	});
+
+	describe('saveFile()', () => {
+
+		beforeEach(async () => {
+			await remove('test/tmp');
+		});
+
+		after(async () => {
+			await remove('test/tmp');
+		});
+
+		it('should save file with correct extension', async () => {
+			const fileName = 'test/tmp/saved.aco';
+			await saveFile('', fileName);
+			const fileExists = fs.existsSync(fileName);
+			expect(fileExists).to.equal(true);
 		});
 
 	});
