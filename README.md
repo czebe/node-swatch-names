@@ -7,9 +7,8 @@
 
 **A node tool to save the hassle of naming each color in your project manually.**
 
-Swatch-names reads standard **Photoshop .aco swatch files** finds a unique color name for every swatch item and saves the resulting color palette as an **.aco** file. This file can be loaded into Photoshop's swatches so developers and designers use the same color names.
-
-Exports your color names and values to SCSS and JS variables.
+Swatch-names automatically and consistently names Photoshop color swatches to be shared among frontend developers and designers. Exports colors to SASS and JS variables for use in code.
+The tool reads standard **Photoshop .aco swatch files** finds a unique color name for every swatch entry and saves the resulting color palette as an **.aco** file. This file can be loaded into Photoshop's Swatches so developers and designers use the same color names.
 
 ## Install
 
