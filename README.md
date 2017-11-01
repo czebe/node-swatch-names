@@ -1,7 +1,7 @@
 
 <img align="right" src="https://user-images.githubusercontent.com/2728671/32230886-6946c520-be54-11e7-9cf3-8e33a35cb20d.png" width="200" height="269" />
 
-# Swatch Names
+# Swatch-names
 
 [![GitHub release](https://img.shields.io/github/release/czebe/node-swatch-names.svg)](https://github.com/czebe/node-swatch-names)
 
