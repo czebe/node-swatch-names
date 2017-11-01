@@ -2,14 +2,15 @@ import {expect} from 'chai';
 import suppose from 'suppose';
 import fs, {remove} from 'fs-extra';
 import _ from 'lodash';
+import {underline, bgBlue, bold, whiteBright} from 'chalk';
 
 import {MESSAGES} from '../src/lib/prompts';
 
 const moveDown = (times = 1) => _.repeat('\x1B\x5B\x42', times);
 
-describe('cli', () => {
+describe(bgBlue.whiteBright('cli'), () => {
 
-	describe('convert swatch file', () => {
+	describe(underline.bold('convert swatch file'), () => {
 
 		beforeEach(async () => {
 			await remove('test/tmp');
@@ -45,7 +46,7 @@ describe('cli', () => {
 
 			await new Promise((resolve, reject) => {
 				suppose('node', ['dist/cli.js'])
-					.when(new RegExp(MESSAGES.swatchFileToProcess, 'i')).respond(fileName).respond('\n')
+					.when(new RegExp(MESSAGES.swatchFileToProcess, 'i')).respond(moveDown() + '\n')
 					.when(new RegExp(MESSAGES.confirmOverwrite, 'i')).respond('y\n')
 					.when(new RegExp(MESSAGES.initializeWatcher, 'i')).respond('n\n')
 					.end(() => {
@@ -74,7 +75,7 @@ describe('cli', () => {
 
 	});
 
-	describe('export SCSS/JS', () => {
+	describe(underline.bold('export SCSS/JS'), () => {
 
 		beforeEach(async () => {
 			await remove('test/tmp');
@@ -172,5 +173,5 @@ describe('cli', () => {
 	// 	});
 	//
 	// });
-	
+
 });

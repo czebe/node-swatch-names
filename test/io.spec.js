@@ -1,11 +1,12 @@
 import {expect} from 'chai';
 import fs, {remove} from 'fs-extra';
+import {underline, bgBlue, bold, whiteBright} from 'chalk';
 
 import { saveFile, readFile, listFiles } from '../src/lib/io';
 
-describe('io', () => {
+describe(bgBlue.whiteBright('io'), () => {
 
-	describe('listFiles()', () => {
+	describe(underline.bold('listFiles()'), () => {
 
 		it('should list .aco files below supplied root', async () => {
 			const files = await listFiles('test');
@@ -14,7 +15,7 @@ describe('io', () => {
 
 	});
 
-	describe('readFile()', () => {
+	describe(underline.bold('readFile()'), () => {
 
 		it('should read the required binary file', async () => {
 			const data = await readFile('test/fixtures/swatch-bw.aco');
@@ -33,7 +34,7 @@ describe('io', () => {
 
 	});
 
-	describe('saveFile()', () => {
+	describe(underline.bold('saveFile()'), () => {
 
 		beforeEach(async () => {
 			await remove('test/tmp');

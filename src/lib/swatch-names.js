@@ -71,3 +71,4 @@ export const sanitizeColorName = (name, divider='-') => {
 	return removeDiacritics(name.toLowerCase()).replace(/^(\d{1})(.*)/, 'the-$1$2').replace(/[^\w|\d|\s|-]/g, '').replace(/\s/g, divider);
 };
 
+export {encode, decode} from './aco';

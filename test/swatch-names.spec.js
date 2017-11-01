@@ -1,12 +1,13 @@
 import {expect} from 'chai';
 import colorList from 'color-name-list';
+import {underline, bgBlue, bold, whiteBright} from 'chalk';
 import _ from 'lodash';
 
 import {getColorNames, processSwatch, sanitizeColorName, FILE_HEADER} from '../src/lib/swatch-names';
 
-describe('swatch-names', () => {
+describe(bgBlue.whiteBright('swatch-names'), () => {
 
-	describe('sanitizeColorName()', () => {
+	describe(underline.bold('sanitizeColorName()'), () => {
 
 		it('should replace leading number', () => {
 			expect(sanitizeColorName('1975 Earth Red')).to.equal('the-1975-earth-red');
@@ -26,7 +27,7 @@ describe('swatch-names', () => {
 
 	});
 
-	describe('getColorNames()', () => {
+	describe(underline.bold('getColorNames()'), () => {
 
 		it('should return correct color names for hex color codes', () => {
 			const colors = _.map(_.sampleSize(colorList, 50), c => ({name: sanitizeColorName(c.name), hex: c.hex.toUpperCase()}));
@@ -49,7 +50,7 @@ describe('swatch-names', () => {
 
 	});
 
-	describe('processSwatch()', () => {
+	describe(underline.bold('processSwatch()'), () => {
 
 		const colors = _.map(_.sampleSize(colorList, 10), c => ({name: sanitizeColorName(c.name), hex: c.hex.toUpperCase()}));
 		const processed = processSwatch(_.map(colors, c => ({hex: c.hex})));

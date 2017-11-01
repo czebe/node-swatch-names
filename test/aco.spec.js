@@ -1,9 +1,10 @@
 import {expect} from 'chai';
+import {underline, bgBlue, bold, whiteBright} from 'chalk';
 
 import {readFile} from '../src/lib/io';
 import {encode, decode} from '../src/lib/aco';
 
-describe('aco', () => {
+describe(bgBlue.whiteBright('aco'), () => {
 
 	let swatchBw;
 
@@ -11,7 +12,7 @@ describe('aco', () => {
 		swatchBw = await readFile('test/fixtures/swatch-bw.aco');
 	});
 
-	describe('decoding', async () => {
+	describe(underline.bold('decoding'), async () => {
 
 		let decoded;
 
@@ -34,12 +35,12 @@ describe('aco', () => {
 
 	});
 
-	describe('encoding', async () => {
+	describe(underline.bold('encoding'), async () => {
 
 		it('should generate binary data from JSON data', () => {
 			const colors = [
-				{name: 'Black', color: '#000000'},
-				{name: 'White', color: '#ffffff'}
+				{name: 'Black', hex: '#000000'},
+				{name: 'White', hex: '#ffffff'}
 			];
 			const encoded = encode(colors);
 			expect(encoded.toString('hex')).to.equal(swatchBw.toString('hex'));
