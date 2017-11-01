@@ -38,4 +38,4 @@ tmp/
 # build
 dist/
 
-art/
+.nyc_output/
