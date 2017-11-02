@@ -54,14 +54,6 @@ export const outputPath = (def) => ({
 	when: (answers) => !answers.overwrite
 });
 
-export const initialize = (skipInit) => ({
-	type: 'confirm',
-	name: 'initialize',
-	message: MESSAGES.initializeWatcher,
-	default: true,
-	when: !skipInit
-});
-
 export const scssPath = (root, noSave) => ({
 	type: 'path',
 	name: 'scssPath',

@@ -30,16 +30,16 @@ Specify a swatch file and an output for the result:
 $ ./node_modules/.bin/swatch-names --swatch path/to/source-swatch.aco --output path/to/result-swatch.aco
 ```
 
-Specify a swatch file, an output and SCSS/JS file to be generated:
+Specify a swatch file, an output and SCSS/JS file to be generated. This is especially useful for **watch scripts** (use `npm-watch` or `nodemon`).
 
 ```sh
 $ ./node_modules/.bin/swatch-names --swatch path/to/source-swatch.aco --output path/to/result-swatch.aco --scss path/to/colors.scss --js path/to/colors.js
 ```
 
-Run file watcher initialization using `npm-watch`:
+To convert and process multiple swatch files, simply supply multiple arguments:
 
 ```sh
-$ ./node_modules/.bin/swatch-names --init
+$ ./node_modules/.bin/swatch-names --swatch swatch1.aco --swatch swatch2.aco --scss colors.scss --js colors.js
 ```
 
 ## Acknowledgements
