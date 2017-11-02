@@ -12,8 +12,10 @@ The tool reads standard **Photoshop .aco swatch files** finds a unique color nam
 
 ## Before/after
 
+<p>
 <img align="left" src="https://user-images.githubusercontent.com/2728671/32318309-2b6660da-bfb7-11e7-90be-7b1665fcc434.png" />
 <img align="right" src="https://user-images.githubusercontent.com/2728671/32318310-2b846742-bfb7-11e7-9e1d-f9340d5daafd.png" />
+</p>
 
 ## Install
 
