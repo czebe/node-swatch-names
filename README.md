@@ -53,7 +53,7 @@ export default {
 $ npm install node-swatch-names --save-dev
 ```
 
-## Usage
+## Usage: CLI
 
 Start the CLI and progress step-by-step with swatch conversion or setup:
 
@@ -78,6 +78,19 @@ To convert and process multiple swatch files, simply supply multiple arguments:
 ```sh
 $ ./node_modules/.bin/swatch-names --swatch swatch1.aco --swatch swatch2.aco --scss colors.scss --js colors.js
 ```
+
+## Usage: node
+
+You can utilize getColorNames() to generate color names for any hex input. Or use encode() to generate a Photoshop Swatch file in node.
+
+ ```javascript
+import {getColorNames} from 'node-swatch-names';
+
+const colors = getColorNames(['#59CFF1', '#D2E7EF', '#6F97A8', '#C6A376']);
+
+console.log(color[0]);
+// {name: "turquoise-sea", hex: "#59CFF1"}
+ ```
 
 ## Acknowledgements
 

@@ -47,7 +47,7 @@ const convertFile = (input, output, scss, js) => {
 		readFile(input)
 			.then((data) => {
 				processed = processSwatch(decode(data));
-				return saveFile(encode(processed.colors), output, 'Swatch file written to: ')
+				return saveFile(encode(processed.colors), output, 'Swatch file written to: ');
 			})
 			.then(() => {
 				return scss ? saveFile(processed.scss, scss, 'SCSS file written to: ') : Promise.resolve();

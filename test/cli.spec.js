@@ -29,7 +29,6 @@ describe(bgBlue.whiteBright('cli'), () => {
 					.when(new RegExp(MESSAGES.swatchFileToProcess, 'i')).respond('\n')
 					.when(new RegExp(MESSAGES.confirmOverwrite, 'i')).respond('\n')
 					.when(new RegExp(MESSAGES.outputPath, 'i')).respond(output + '\n')
-					.when(new RegExp(MESSAGES.initializeWatcher, 'i')).respond('n\n')
 					.end(() => {
 						const fileCreated = fs.existsSync(output);
 						expect(fileCreated).to.equal(true);
@@ -46,9 +45,8 @@ describe(bgBlue.whiteBright('cli'), () => {
 
 			await new Promise((resolve, reject) => {
 				suppose('node', ['dist/cli.js'])
-					.when(new RegExp(MESSAGES.swatchFileToProcess, 'i')).respond(moveDown() + '\n')
+					.when(new RegExp(MESSAGES.swatchFileToProcess, 'i')).respond(moveDown(2) + '\n')
 					.when(new RegExp(MESSAGES.confirmOverwrite, 'i')).respond('y\n')
-					.when(new RegExp(MESSAGES.initializeWatcher, 'i')).respond('n\n')
 					.end(() => {
 						const modifiedTime = fs.statSync(fileName).mtime;
 						expect(modifiedTime).to.not.equal(startTime);
@@ -143,7 +141,6 @@ describe(bgBlue.whiteBright('cli'), () => {
 		});
 
 	});
-
 
 
 	// // TODO: convert multiple swatches into multiple outputs, or combine multiple files into one output

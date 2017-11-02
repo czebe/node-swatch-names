@@ -30,20 +30,30 @@ export const getColorNames = (hexValues) => {
 	}
 
 	_.forEach(hexValues, (hex) => {
-		if (!/^#[0-9A-F]{6}$/i.test(hex)) {
+		if (!/^#[0-9A-F]{6}|[0-9A-F]{3}$/i.test(hex)) {
 			throw new Error('Incorrect hex code supplied: ' + hex);
 		}
+
+		hex = expand(hex);
 
 		const nearestColorName = nearestColor.from(allColorNames);
 		const foundColor = nearestColorName(hex);
 
 		// Remove from allColorNames
 		allColorNames = _.omit(allColorNames, foundColor.name);
-		allColors.push({name: sanitizeColorName(foundColor.name), hex: hex.toUpperCase()});
+		allColors.push({name: sanitizeColorName(foundColor.name), hex});
 	});
 
 	return allColors;
 };
+
+const expand = (hex) => {
+	if ((hex.length === 4) && (hex.charAt(0) === '#')) {
+		hex = '#' + hex.charAt(1) + hex.charAt(1) + hex.charAt(2) + hex.charAt(2) + hex.charAt(3) + hex.charAt(3);
+	}
+	return hex.toUpperCase();
+};
+
 
 /**
  * Processes the supplied swatch file, returns a swatch object, generates SCSS/JS source with color variables.

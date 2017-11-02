@@ -37,8 +37,11 @@ describe(bgBlue.whiteBright('swatch-names'), () => {
 			expect(getColorNames('#B78727')).to.deep.equal([{name: 'university-of-california-gold', hex: '#B78727'}]);
 		}).timeout(5000);
 
+		it('should return correct color names for short hex format', () => {
+			expect(getColorNames(['#fff'])).to.deep.equal([{name: 'white', hex: '#FFFFFF'}]);
+		});
+
 		it('should throw an error when incorrect hex code or wrong argument type is supplied', () => {
-			expect(() => getColorNames(['#fff'])).to.throw();
 			expect(() => getColorNames(['#fffff'])).to.throw();
 			expect(() => getColorNames(['#gg0101'])).to.throw();
 			expect(() => getColorNames(['ffffff'])).to.throw();

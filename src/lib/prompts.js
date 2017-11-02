@@ -6,7 +6,6 @@ export const MESSAGES = {
 	swatchFileToProcess: 'Which swatch file do you want to process?',
 	confirmOverwrite: 'Overwrite swatch file?',
 	outputPath: 'Filename and location of the new swatch file:',
-	initializeWatcher: 'Initialize watcher for this swatch file?',
 	saveScss: 'Save SCSS file with color variables to: (leave this empty if SCSS output is not needed)',
 	saveJs: 'Save JS file with color variables to: (leave this empty if JS output is not needed)'
 };

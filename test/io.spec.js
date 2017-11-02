@@ -2,7 +2,7 @@ import {expect} from 'chai';
 import fs, {remove} from 'fs-extra';
 import {underline, bgBlue, bold, whiteBright} from 'chalk';
 
-import { saveFile, readFile, listFiles } from '../src/lib/io';
+import {saveFile, readFile, listFiles} from '../src/lib/io';
 
 describe(bgBlue.whiteBright('io'), () => {
 

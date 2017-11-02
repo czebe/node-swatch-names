@@ -1,7 +1,14 @@
+import convert from 'color-convert';
+import _ from 'lodash';
+
 const PROTOCOL_SIZE = 1;
 const NUMBER_OF_COLORS_SIZE = 1;
 const HEADER_SIZE = PROTOCOL_SIZE + NUMBER_OF_COLORS_SIZE;
 const COLOR_SIZE = 5;
+const COLOR_MODES = {
+	rgb: 0,
+	hsb: 1
+};
 
 // ### DECODING ###
 
@@ -22,15 +29,40 @@ const decode = (data) => {
 
 	function split(chunks) {
 
+		let getHex, hex, rgb;
+
 		const [colorSpace, w, x, y, z, , nameSizeHex, ...rest] = chunks;
 		const nameSize = parseInt(nameSizeHex, 16);
 		const name = rest.slice(0, nameSize - 1)
 			.map(s => String.fromCharCode(parseInt(s.toString(16), 16)))
 			.join('');
 
-		const getHex = (color) => color.slice(0, 2);
-		const hex = `#${getHex(w)}${getHex(x)}${getHex(y)}`;
-		const color = {name, hex, r: parseInt(getHex(w), 16), g: parseInt(getHex(x), 16), b: parseInt(getHex(y), 16)};
+		const mode = parseInt(colorSpace, 16);
+		switch (mode) {
+			case COLOR_MODES.rgb:
+				getHex = (color) => _.padStart(Math.floor(parseInt(color, 16) / 256).toString(16), 2, '0');
+				hex = `#${getHex(w)}${getHex(x)}${getHex(y)}`;
+				rgb = convert.hex.rgb(hex);
+				break;
+
+			case COLOR_MODES.hsb:
+				const h = parseInt(w, 16) / 182.04;
+				const s = parseInt(x, 16) / 655.35;
+				const v = parseInt(y, 16) / 655.35;
+
+				rgb = convert.hsv.rgb([h, s, v]);
+				hex = '#' + convert.rgb.hex(rgb);
+				break;
+
+			default:
+				throw new Error('Unsupported color mode. Make sure you create your swatches as RGB or HSB values in Photoshop.');
+
+		}
+
+		hex = hex.toUpperCase();
+
+		const [r, g, b] = rgb;
+		const color = {name, hex, r, g, b};
 		const nextColor = rest.slice(nameSize);
 
 		return nextColor.length ? [color, ...split(nextColor)] : [color];
@@ -38,6 +70,7 @@ const decode = (data) => {
 
 	return split(protocolTwoColorsChunks);
 };
+
 
 // ### ENCODING ###
 

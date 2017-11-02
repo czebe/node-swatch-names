@@ -6,25 +6,20 @@ import {encode, decode} from '../src/lib/aco';
 
 describe(bgBlue.whiteBright('aco'), () => {
 
-	let swatchBw;
+	let swatch, decoded;
 
-	before(async () => {
-		swatchBw = await readFile('test/fixtures/swatch-bw.aco');
-	});
+	describe(underline.bold('decoding RGB swatches'), async () => {
 
-	describe(underline.bold('decoding'), async () => {
-
-		let decoded;
-
-		before(() => {
-			decoded = decode(swatchBw);
+		before(async () => {
+			swatch = await readFile('test/fixtures/swatch-bw.aco');
+			decoded = decode(swatch);
 		});
 
 		it('should decode binary data from .aco file', () => {
 			expect(decoded[0].name).to.equal('Black');
 			expect(decoded[0].hex).to.equal('#000000');
 			expect(decoded[1].name).to.equal('White');
-			expect(decoded[1].hex).to.equal('#ffffff');
+			expect(decoded[1].hex).to.equal('#FFFFFF');
 		});
 
 		it('should decode RGB values from .aco file', () => {
@@ -35,7 +30,25 @@ describe(bgBlue.whiteBright('aco'), () => {
 
 	});
 
+	describe(underline.bold('decoding HSB swatches'), async () => {
+
+		before(async () => {
+			swatch = await readFile('test/fixtures/swatch-hsb.aco');
+			decoded = decode(swatch);
+		});
+
+		it('should decode HSB swatches from .aco file', async () => {
+			expect(decoded[0].name).to.equal('Swatch 1');
+			expect(decoded[0].hex).to.equal('#5AD1F2');
+		});
+
+	});
+
 	describe(underline.bold('encoding'), async () => {
+
+		before(async () => {
+			swatch = await readFile('test/fixtures/swatch-bw.aco');
+		});
 
 		it('should generate binary data from JSON data', () => {
 			const colors = [
@@ -43,7 +56,7 @@ describe(bgBlue.whiteBright('aco'), () => {
 				{name: 'White', hex: '#ffffff'}
 			];
 			const encoded = encode(colors);
-			expect(encoded.toString('hex')).to.equal(swatchBw.toString('hex'));
+			expect(encoded.toString('hex')).to.equal(swatch.toString('hex'));
 		});
 
 		it('should throw an error when supplied with a wrong argument type', () => {
