@@ -10,6 +10,11 @@
 Swatch-names automatically and consistently names Photoshop color swatches to be shared among frontend developers and designers. Exports colors to SASS and JS variables for use in code.
 The tool reads standard **Photoshop .aco swatch files** finds a unique color name for every swatch entry and saves the resulting color palette as an **.aco** file. This file can be loaded into Photoshop's Swatches so developers and designers use the same color names.
 
+## Before/after
+
+<img align="left" src="https://user-images.githubusercontent.com/2728671/32318309-2b6660da-bfb7-11e7-90be-7b1665fcc434.png" />
+<img align="right" src="https://user-images.githubusercontent.com/2728671/32318310-2b846742-bfb7-11e7-9e1d-f9340d5daafd.png" />
+
 ## Install
 
 ```sh
@@ -27,13 +32,13 @@ $ ./node_modules/.bin/swatch-names
 Specify a swatch file and an output for the result:
 
 ```sh
-$ ./node_modules/.bin/swatch-names --swatch path/to/source-swatch.aco --output path/to/result-swatch.aco
+$ ./node_modules/.bin/swatch-names --swatch path/to/swatch.aco --output path/to/result.aco
 ```
 
 Specify a swatch file, an output and SCSS/JS file to be generated. This is especially useful for **watch scripts** (use `npm-watch` or `nodemon`).
 
 ```sh
-$ ./node_modules/.bin/swatch-names --swatch path/to/source-swatch.aco --output path/to/result-swatch.aco --scss path/to/colors.scss --js path/to/colors.js
+$ ./node_modules/.bin/swatch-names --swatch swatch.aco --output result.aco --scss colors.scss --js colors.js
 ```
 
 To convert and process multiple swatch files, simply supply multiple arguments:
