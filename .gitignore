@@ -24,6 +24,10 @@ ehthumbs.db
 Desktop.ini
 $RECYCLE.BIN/
 
+# Logs
+npm-debug.log
+.nyc_output/
+
 # SASS
 *.sass-cache
 inline
@@ -37,5 +41,3 @@ tmp/
 
 # build
 dist/
-
-.nyc_output/

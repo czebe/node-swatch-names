@@ -47,6 +47,8 @@ export default {
 };
 ```
 
+=======
+>>>>>>> e14f356ca52201498e0d8d0e7e0f4f4f392c917b
 
 ## Install
 
