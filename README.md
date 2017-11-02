@@ -106,7 +106,7 @@ This tool was inspired by the following great projects:
 
 PRs are much appreciated!
 
-Use `npm run develop` while coding and `npm run test` to run unit tests.
+Use `npm run develop` while coding and `npm test` to run unit tests.
 
 ## License
 

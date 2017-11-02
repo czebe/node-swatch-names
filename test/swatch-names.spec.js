@@ -55,8 +55,12 @@ describe(bgBlue.whiteBright('swatch-names'), () => {
 
 	describe(underline.bold('processSwatch()'), () => {
 
-		const colors = _.map(_.sampleSize(colorList, 10), c => ({name: sanitizeColorName(c.name), hex: c.hex.toUpperCase()}));
-		const processed = processSwatch(_.map(colors, c => ({hex: c.hex})));
+		let colors, processed;
+
+		before(() => {
+			colors = _.map(_.sampleSize(colorList, 10), c => ({name: sanitizeColorName(c.name), hex: c.hex.toUpperCase()}));
+			processed = processSwatch(_.map(colors, c => ({hex: c.hex})));
+		});
 
 		it('should generate valid color names', () => {
 			expect(processed.colors).to.deep.equal(colors);

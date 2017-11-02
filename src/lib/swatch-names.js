@@ -30,7 +30,9 @@ export const getColorNames = (hexValues) => {
 	}
 
 	_.forEach(hexValues, (hex) => {
-		if (!/^#[0-9A-F]{6}|[0-9A-F]{3}$/i.test(hex)) {
+
+		const validHex = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(hex);
+		if (!validHex) {
 			throw new Error('Incorrect hex code supplied: ' + hex);
 		}
 
