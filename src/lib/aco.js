@@ -87,15 +87,17 @@ const writeRGBValue = (value) => {
 };
 
 const hexToRgb = (hex) => {
-	const match = hex.toString(16).match(/[a-f0-9]{6}|[a-f0-9]{3}/i);
+
+	const match = hex.toString(16).match(/^#([a-f0-9]{6}|[a-f0-9]{3})$/i);
+
 	if (!match) {
 		return [0, 0, 0];
 	}
 
-	let colorString = match[0];
+	let colorString = match[1];
 
 	// Parse short version hex format also
-	if (match[0].length === 3) {
+	if (colorString.length === 3) {
 		colorString = colorString.split('').map(char => char + char).join('');
 	}
 
@@ -118,11 +120,6 @@ const writeColors = (colors, writeNames = false) => {
 
 			//Parse RGB
 			const rgb = hexToRgb(hex).filter((value) => !isNaN(value));
-
-			//Make sure we have valid values
-			if (rgb.length < 3) {
-				throw new Error('Invalid color supplied to writeColors(): ' + rgb.join(', '));
-			}
 
 			buffer = Buffer.concat([buffer, writeValue(0)]); //Write 0, for RGB color space
 			rgb.forEach((c) => buffer = Buffer.concat([buffer, writeRGBValue(c)]));

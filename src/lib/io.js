@@ -17,7 +17,7 @@ export const listFiles = (root = process.cwd(), extension = 'aco') => {
 	];
 
 	return new Promise((resolve, reject) => {
-		glob(pattern, {root, ignore}, (err, files) => {
+		glob(pattern, {cwd: root, ignore}, (err, files) => {
 			if (err) return reject(err);
 			resolve(files);
 		})

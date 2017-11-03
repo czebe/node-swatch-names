@@ -13,6 +13,11 @@ describe(bgBlue.whiteBright('io'), () => {
 			expect(files.length).to.be.greaterThan(0);
 		});
 
+		it('should default to current directory when no root is specified', async () => {
+			const files = await listFiles();
+			expect(files.length).to.be.greaterThan(0);
+		});
+
 	});
 
 	describe(underline.bold('readFile()'), () => {

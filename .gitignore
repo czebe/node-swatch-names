@@ -41,3 +41,6 @@ tmp/
 
 # build
 dist/
+
+# Coverage
+coverage/

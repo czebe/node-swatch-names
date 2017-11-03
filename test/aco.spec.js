@@ -44,6 +44,18 @@ describe(bgBlue.whiteBright('aco'), () => {
 
 	});
 
+	describe(underline.bold('decoding LAB swatches'), async () => {
+
+		before(async () => {
+			swatch = await readFile('test/fixtures/swatch-lab.aco');
+		});
+
+		it('should throw an error for unsupported color space', async () => {
+			expect(() => decode(swatch)).to.throw();
+		});
+
+	});
+
 	describe(underline.bold('encoding'), async () => {
 
 		before(async () => {
@@ -53,10 +65,16 @@ describe(bgBlue.whiteBright('aco'), () => {
 		it('should generate binary data from JSON data', () => {
 			const colors = [
 				{name: 'Black', hex: '#000000'},
-				{name: 'White', hex: '#ffffff'}
+				{name: 'White', hex: '#fff'}
 			];
 			const encoded = encode(colors);
 			expect(encoded.toString('hex')).to.equal(swatch.toString('hex'));
+		});
+
+		it('should default to [0, 0, 0] when supplied with wrong hex code', () => {
+			const encoded = encode([{name: 'foo', hex: '#eeeee'}]);
+			const blackEncoded = encode([{name: 'foo', hex: '#000000'}]);
+			expect(encoded.toString('hex')).to.equal(blackEncoded.toString('hex'));
 		});
 
 		it('should throw an error when supplied with a wrong argument type', () => {

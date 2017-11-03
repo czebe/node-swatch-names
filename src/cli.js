@@ -35,6 +35,7 @@ const cli = meow(`
 		
 `);
 
+const noSave = 'Don\'t save.'
 const root = process.cwd();
 inquirer.registerPrompt('path', PathPrompt);
 inquirer.registerPrompt('autocomplete', autocomplete);
@@ -61,9 +62,9 @@ const convertFile = (input, output, scss, js) => {
 	});
 };
 
-const convertSwatch = async () => {
+const convertSwatch = async (path = root) => {
 	const spinner = ora(`Scanning ${green(root)} for swatch files (*.aco)...`).start();
-	const files = await listFiles(root);
+	const files = await listFiles(path);
 	spinner.stop();
 
 	if (!files.length) {
@@ -73,23 +74,27 @@ const convertSwatch = async () => {
 			Prompts.newPath(root)
 		]).then((answers) => {
 			if (answers.newPath) {
-				convertSwatches(answers.newPath);
+				convertSwatch(answers.newPath);
 			} else {
 				return process.exit(1);
 			}
 		});
 	} else {
-		// Found some *.aco files, convert them
+		// Found some *.aco files, convert one of them
 		inquirer.prompt([
 			Prompts.swatch(files)
 		]).then((answers) => {
 			const swatchFile = answers.swatch;
 			inquirer.prompt([
 				Prompts.overwrite,
-				Prompts.outputPath(join(dirname(swatchFile), basename(swatchFile, extname(swatchFile)) + '-named.aco'))
+				Prompts.outputPath(join(dirname(swatchFile), basename(swatchFile, extname(swatchFile)) + '-named.aco')),
+				Prompts.scssPath(root, noSave),
+				Prompts.jsPath(root, noSave)
 			]).then((answers) => {
 				const output = answers.overwrite ? swatchFile : answers.outputPath;
-				return convertFile(swatchFile, output);
+				const scss = answers.scssPath !== noSave ? answers.scssPath : null;
+				const js = answers.jsPath !== noSave ? answers.jsPath : null;
+				return convertFile(swatchFile, relative(root, output), relative(root, scss), relative(root, js));
 			});
 		});
 	}
@@ -109,7 +114,7 @@ const swatchNamesCli = (flags) => {
 				const scssPath = _.isArray(scss) ? (scss.length === swatches.length ? scss[index] : scss[0]) : scss;
 				const jsPath = _.isArray(js) ? (js.length === swatches.length ? js[index] : js[0]) : js;
 				const output = flags.overwrite ? swatchFile : flags.output ? flags.output : join(dirname(swatchFile), basename(swatchFile, extname(swatchFile)) + '-named.aco');
-				convertFile(swatchFile, output, scssPath, jsPath);
+				convertFile(swatchFile, relative(root, output), relative(root, scssPath), relative(root, jsPath));
 			});
 		} else {
 			if (_.isArray(scss) || _.isArray(js)) throw new Error(red.bold('Wrong number of output arguments supplied. One swatch file can be converted to one SCSS and one JS file only.'));
