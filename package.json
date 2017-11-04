@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "pretest": "npm run build",
-    "test": "nyc mocha --require babel-register './test/**/*.spec.js'",
+    "test": "nyc mocha --require babel-register --timeout 5000 './test/**/*.spec.js'",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "develop": "npm-watch",
     "build": "babel src -d dist",
