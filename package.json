@@ -10,10 +10,11 @@
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "develop": "npm-watch",
     "build": "babel src -d dist",
+    "lint": "eslint src test",
     "patch": "npm version patch && npm publish",
     "minor": "npm version minor && npm publish",
     "major": "npm version major && npm publish",
-    "prepublish": "npm test && npm run build",
+    "prepublish": "npm run lint && npm test && npm run build",
     "postpublish": "git push origin master --follow-tags",
     "prepare": "npm run build"
   },
@@ -66,6 +67,7 @@
     "babel-register": "^6.26.0",
     "chai": "^4.1.2",
     "codecov": "^3.0.0",
+    "eslint": "^4.10.0",
     "mocha": "^4.0.1",
     "nyc": "^11.2.1",
     "suppose": "^0.6.2"

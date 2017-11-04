@@ -20,7 +20,7 @@ const COLOR_MODES = {
  */
 const decode = (data) => {
 	const parts = data.match(/.{1,4}/g);
-	const [version, numberOfColorsHex, ...rest] = parts;
+	const [ , numberOfColorsHex, ...rest] = parts;
 
 	// Let's skip the v1 protocol.
 	const numberOfColors =  parseInt(numberOfColorsHex, 16);
@@ -31,7 +31,7 @@ const decode = (data) => {
 
 		let getHex, hex, rgb;
 
-		const [colorSpace, w, x, y, z, , nameSizeHex, ...rest] = chunks;
+		const [colorSpace, w, x, y, , , nameSizeHex, ...rest] = chunks;
 		const nameSize = parseInt(nameSizeHex, 16);
 		const name = rest.slice(0, nameSize - 1)
 			.map(s => String.fromCharCode(parseInt(s.toString(16), 16)))
@@ -39,13 +39,14 @@ const decode = (data) => {
 
 		const mode = parseInt(colorSpace, 16);
 		switch (mode) {
-			case COLOR_MODES.rgb:
+			case COLOR_MODES.rgb: {
 				getHex = (color) => _.padStart(Math.floor(parseInt(color, 16) / 256).toString(16), 2, '0');
 				hex = `#${getHex(w)}${getHex(x)}${getHex(y)}`;
 				rgb = convert.hex.rgb(hex);
 				break;
+			}
 
-			case COLOR_MODES.hsb:
+			case COLOR_MODES.hsb: {
 				const h = parseInt(w, 16) / 182.04;
 				const s = parseInt(x, 16) / 655.35;
 				const v = parseInt(y, 16) / 655.35;
@@ -53,6 +54,7 @@ const decode = (data) => {
 				rgb = convert.hsv.rgb([h, s, v]);
 				hex = '#' + convert.rgb.hex(rgb);
 				break;
+			}
 
 			default:
 				throw new Error('Unsupported color mode. Make sure you create your swatches as RGB or HSB values in Photoshop.');

@@ -9,9 +9,9 @@ import {MESSAGES} from '../src/lib/prompts';
 const MOVEDOWN = (times = 1) => _.repeat('\x1B\x5B\x42', times); // Up: '\x1B\x5B\x41'
 const ENTER = '\x0D';
 
-describe(bgBlue.whiteBright('cli'), () => {
+describe(bgBlue(whiteBright('cli')), () => {
 
-	describe(underline.bold('convert swatch file'), () => {
+	describe(underline(bold('convert swatch file')), () => {
 
 		beforeEach(async () => {
 			await remove('test/tmp');
@@ -25,7 +25,7 @@ describe(bgBlue.whiteBright('cli'), () => {
 
 			process.chdir('./src');
 
-			await new Promise((resolve, reject) => {
+			await new Promise((resolve) => {
 				suppose('node', ['../dist/cli.js'])
 					.when(new RegExp(MESSAGES.specifyDifferentPath, 'i'), 'n' + ENTER)
 					.end(() => {
@@ -42,7 +42,7 @@ describe(bgBlue.whiteBright('cli'), () => {
 
 			process.chdir('./src');
 
-			await new Promise((resolve, reject) => {
+			await new Promise((resolve) => {
 				suppose('node', ['../dist/cli.js'])
 					.when(new RegExp(MESSAGES.specifyDifferentPath, 'i'), ENTER)
 					.when(new RegExp(MESSAGES.pathToYourSwatches, 'i'), '../test' + ENTER)
@@ -61,7 +61,7 @@ describe(bgBlue.whiteBright('cli'), () => {
 			const outputScss = 'test/tmp/a.scss';
 			const outputJs = 'test/tmp/a.js';
 
-			await new Promise((resolve, reject) => {
+			await new Promise((resolve) => {
 				suppose('node', ['dist/cli.js'])
 					.when(new RegExp(MESSAGES.swatchFileToProcess, 'i'), ENTER)
 					.when(new RegExp(MESSAGES.confirmOverwrite, 'i'), 'n' + ENTER)
@@ -86,7 +86,7 @@ describe(bgBlue.whiteBright('cli'), () => {
 			const fileName = 'test/fixtures/swatch-overwrite.aco';
 			const startTime = fs.statSync(fileName).mtime;
 
-			await new Promise((resolve, reject) => {
+			await new Promise((resolve) => {
 				suppose('node', ['dist/cli.js'])
 					.when(new RegExp(MESSAGES.swatchFileToProcess, 'i'), MOVEDOWN(2) + ENTER)
 					.when(new RegExp(MESSAGES.confirmOverwrite, 'i'), 'y' + ENTER)
@@ -103,7 +103,7 @@ describe(bgBlue.whiteBright('cli'), () => {
 
 			const output = 'test/tmp/a.aco';
 
-			await new Promise((resolve, reject) => {
+			await new Promise((resolve) => {
 				suppose('node', ['dist/cli.js', '--swatch', 'test/fixtures/swatch-bw.aco', '--output', output])
 					.end(() => {
 						const fileCreated = fs.existsSync(output);
@@ -118,7 +118,7 @@ describe(bgBlue.whiteBright('cli'), () => {
 
 			const output = 'test/tmp/a.aco';
 
-			await new Promise((resolve, reject) => {
+			await new Promise((resolve) => {
 				suppose('node', ['dist/cli.js', '--swatch', 'test/fixtures/swatch-bw.aco', '--swatch', 'test/fixtures/swatch-hsb.aco', '--output', output, '--scss', 'test/tmp/a.scss', '--js', 'test/tmp/a.js'])
 					.end(() => {
 						const fileCreated = fs.existsSync(output);
@@ -131,7 +131,7 @@ describe(bgBlue.whiteBright('cli'), () => {
 
 	});
 
-	describe(underline.bold('export SCSS/JS'), () => {
+	describe(underline(bold('export SCSS/JS')), () => {
 
 		beforeEach(async () => {
 			await remove('test/tmp');
@@ -146,7 +146,7 @@ describe(bgBlue.whiteBright('cli'), () => {
 			const outputSwatch = 'test/tmp/a.aco';
 			const outputScss = 'test/tmp/a.scss';
 
-			await new Promise((resolve, reject) => {
+			await new Promise((resolve) => {
 				suppose('node', ['dist/cli.js', '--swatch', 'test/fixtures/swatch-bw.aco', '--output', outputSwatch, '--scss', outputScss])
 					.end(() => {
 						const swatchFileCreated = fs.existsSync(outputSwatch);
@@ -164,7 +164,7 @@ describe(bgBlue.whiteBright('cli'), () => {
 			const outputSwatch = 'test/tmp/a.aco';
 			const outputJs = 'test/tmp/a.js';
 
-			await new Promise((resolve, reject) => {
+			await new Promise((resolve) => {
 				suppose('node', ['dist/cli.js', '--swatch', 'test/fixtures/swatch-bw.aco', '--output', outputSwatch, '--js', outputJs])
 					.end(() => {
 						const swatchFileCreated = fs.existsSync(outputSwatch);
@@ -183,7 +183,7 @@ describe(bgBlue.whiteBright('cli'), () => {
 			const outputScss = 'test/tmp/a.scss';
 			const outputJs = 'test/tmp/a.js';
 
-			await new Promise((resolve, reject) => {
+			await new Promise((resolve) => {
 				suppose('node', ['dist/cli.js', '--swatch', 'test/fixtures/swatch-bw.aco', '--output', outputSwatch, '--scss', outputScss, '--js', outputJs])
 					.end(() => {
 						const swatchFileCreated = fs.existsSync(outputSwatch);

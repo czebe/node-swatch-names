@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import fs from 'fs-extra';
 import {dirname} from 'path';
 import glob from 'glob';
@@ -20,7 +22,7 @@ export const listFiles = (root = process.cwd(), extension = 'aco') => {
 		glob(pattern, {cwd: root, ignore}, (err, files) => {
 			if (err) return reject(err);
 			resolve(files);
-		})
+		});
 	});
 };
 

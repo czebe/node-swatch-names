@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /* eslint-disable no-console */
 
-import {join, relative, isAbsolute, basename, extname, dirname, resolve} from 'path';
-import {cyan, green, red} from 'chalk';
+import {join, relative, basename, extname, dirname, resolve} from 'path';
+import {green, red} from 'chalk';
 import inquirer from 'inquirer';
 import autocomplete from 'inquirer-autocomplete-prompt';
 import {PathPrompt} from 'inquirer-path';
@@ -35,7 +35,7 @@ const cli = meow(`
 		
 `);
 
-const noSave = 'Don\'t save.'
+const noSave = 'Don\'t save.';
 const root = process.cwd();
 inquirer.registerPrompt('path', PathPrompt);
 inquirer.registerPrompt('autocomplete', autocomplete);
@@ -58,7 +58,8 @@ const convertFile = (input, output, scss, js) => {
 			})
 			.then(() => {
 				resolve();
-			});
+			})
+			.catch(() => reject());
 	});
 };
 
