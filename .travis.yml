@@ -14,4 +14,3 @@ deploy:
   file: "./dist/**/*"
   on:
     repo: czebe/node-swatch-names
-    tags: true
