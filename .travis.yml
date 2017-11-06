@@ -1,7 +1,15 @@
 language: node_js
 node_js:
-  - v6
+- v6
 script:
-  - npm test
+- npm test
 after_success:
-  - npm run coverage
+- npm run coverage
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: iO727/7tXmiMFPuspo9s/UkKGA5Gub916yX66PKPpeHyhKqKkiCpOJCjcgVzOha85MM99gZDjRKsJH0gBgZI/rTzkLd0dCYbOylN0ASfuuBNHUT4MFyBLe+oDE7FcghTw/XuPe/PBWGRNkL6gkXfY5Hpk7/KWWkcXoN2Gj88CZgGCMEGRvavktXOfE1cxEyot1VwmF6bsUuYtfV4Jf11g4Vee4wLEMykYsdJ+svj7++REGO/48Q4Ee+3tzIdMXpzDuIGEvMC2/CryU38qFs9dHoVnyuHH6IQSKjqpY6z7M3KSM9pjIafO4452Y1aLeRb+bQYLTVsFuKKRn306+MSQk2OKvg1f1T2q/Q9ndJQ6fU95Vbr21q5H7q0I5niImfkT6dFQkDVAhkC44NfPALx+CK3ezvWLhaWN68IqyZo/z5cZpSq3u4e01cBZBaCMZ/r6mfHxpEoD8ghGU7yRJ8Qv118+y+tOd6ZrC4u/i0yf92duM5Y9ZuhPSB72HDHD3Tdn2kf7HX4yN+XIHgUolS7o0WahBNGMcYzl2XaS7njHFEZHUBIRwgpIeSpWUGJAg82pV0lsBpx7NA37cUeTAgmhx8jgiRVSZjStRW6lZtfR0lYimp2i2wniXwsaFiQhKTrVdw3TmjQLzB/FkB+c3BDDqCQNelqt72ruyekG4h2aio=
+  file: "./dist/"
+  on:
+    repo: czebe/node-swatch-names
