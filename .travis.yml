@@ -6,7 +6,7 @@ script:
 after_success:
 - npm run coverage
 before_deploy:
-  - zip -r swatch-names.zip dist
+  - zip -r swatch-names.zip dist/*
 deploy:
   provider: releases
   skip_cleanup: true
