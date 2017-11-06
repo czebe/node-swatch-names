@@ -3,20 +3,20 @@ import suppose from 'suppose';
 import {remove} from 'fs-extra';
 import {underline, bgBlue, bold, whiteBright} from 'chalk';
 
-import {readFile, saveFile} from '../src/lib/io';
-import {decode, encode} from '../src/lib/aco';
-import {getColorNames, sanitizeColorName} from '../src/lib/swatch-names';
+import {readFile} from '../src/lib/io';
+import {decode} from '../src/lib/aco';
+import {getColorNames} from '../src/lib/swatch-names';
 
-describe(bgBlue.whiteBright('integration'), () => {
+describe(bgBlue(whiteBright('integration')), () => {
 
-	describe(underline.bold('convert a complex swatch'), () => {
+	describe(underline(bold('convert a complex swatch')), () => {
 
 		let swatch, decoded;
 		const outputSwatch = 'test/tmp/a.aco';
 
 		before(async () => {
 			await remove('test/tmp');
-			await new Promise((resolve, reject) => {
+			await new Promise((resolve) => {
 				suppose('node', ['dist/cli.js', '--swatch', 'test/fixtures/swatch-sn.aco', '--output', outputSwatch])
 					.end(resolve);
 			});
@@ -57,7 +57,7 @@ describe(bgBlue.whiteBright('integration'), () => {
 
 	});
 
-	describe(underline.bold('use as a library for color naming'), () => {
+	describe(underline(bold('use as a library for color naming')), () => {
 
 		it('should convert list of hex codes to properly named JS object', () => {
 			const colors = getColorNames(['#59CFF1', '#D2E7EF', '#6F97A8', '#C6A376']);

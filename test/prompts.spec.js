@@ -3,13 +3,13 @@ import {underline, bgBlue, bold, whiteBright} from 'chalk';
 
 import * as Prompts from '../src/lib/prompts';
 
-describe(bgBlue.whiteBright('prompts'), () => {
+describe(bgBlue(whiteBright('prompts')), () => {
 
 	let question;
 	const noSave = 'no save';
 	const root = process.cwd();
 
-	describe(underline.bold('newPath'), () => {
+	describe(underline(bold('newPath')), () => {
 
 		before(() => {
 			question = Prompts.newPath();
@@ -27,7 +27,7 @@ describe(bgBlue.whiteBright('prompts'), () => {
 
 	});
 
-	describe(underline.bold('swatch'), () => {
+	describe(underline(bold('swatch')), () => {
 
 		before(() => {
 			question = Prompts.swatch(['test/aaa.aco', 'test/bbb.aco', 'test/aab.aco']);
@@ -50,7 +50,7 @@ describe(bgBlue.whiteBright('prompts'), () => {
 
 	});
 
-	describe(underline.bold('outputPath'), () => {
+	describe(underline(bold('outputPath')), () => {
 
 		before(() => {
 			question = Prompts.outputPath();
@@ -68,7 +68,7 @@ describe(bgBlue.whiteBright('prompts'), () => {
 
 	});
 
-	describe(underline.bold('scssPath'), () => {
+	describe(underline(bold('scssPath')), () => {
 
 		before(() => {
 			question = Prompts.scssPath(undefined, noSave);
@@ -102,7 +102,7 @@ describe(bgBlue.whiteBright('prompts'), () => {
 
 	});
 
-	describe(underline.bold('jsPath'), () => {
+	describe(underline(bold('jsPath')), () => {
 
 		before(() => {
 			question = Prompts.jsPath(root, noSave);

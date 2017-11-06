@@ -5,9 +5,9 @@ import _ from 'lodash';
 
 import {getColorNames, processSwatch, sanitizeColorName, FILE_HEADER} from '../src/lib/swatch-names';
 
-describe(bgBlue.whiteBright('swatch-names'), () => {
+describe(bgBlue(whiteBright('swatch-names')), () => {
 
-	describe(underline.bold('sanitizeColorName()'), () => {
+	describe(underline(bold('sanitizeColorName()')), () => {
 
 		it('should replace leading number', () => {
 			expect(sanitizeColorName('1975 Earth Red')).to.equal('the-1975-earth-red');
@@ -27,7 +27,7 @@ describe(bgBlue.whiteBright('swatch-names'), () => {
 
 	});
 
-	describe(underline.bold('getColorNames()'), () => {
+	describe(underline(bold('getColorNames()')), () => {
 
 		it('should return correct color names for hex color codes', () => {
 			const colors = _.map(_.sampleSize(colorList, 50), c => ({name: sanitizeColorName(c.name), hex: c.hex.toUpperCase()}));
@@ -53,7 +53,7 @@ describe(bgBlue.whiteBright('swatch-names'), () => {
 
 	});
 
-	describe(underline.bold('processSwatch()'), () => {
+	describe(underline(bold('processSwatch()')), () => {
 
 		let colors, processed;
 

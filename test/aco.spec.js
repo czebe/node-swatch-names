@@ -4,11 +4,11 @@ import {underline, bgBlue, bold, whiteBright} from 'chalk';
 import {readFile} from '../src/lib/io';
 import {encode, decode} from '../src/lib/aco';
 
-describe(bgBlue.whiteBright('aco'), () => {
+describe(bgBlue(whiteBright('aco')), () => {
 
 	let swatch, decoded;
 
-	describe(underline.bold('decoding RGB swatches'), async () => {
+	describe(underline(bold('decoding RGB swatches')), async () => {
 
 		before(async () => {
 			swatch = await readFile('test/fixtures/swatch-bw.aco');
@@ -30,7 +30,7 @@ describe(bgBlue.whiteBright('aco'), () => {
 
 	});
 
-	describe(underline.bold('decoding HSB swatches'), async () => {
+	describe(underline(bold('decoding HSB swatches')), async () => {
 
 		before(async () => {
 			swatch = await readFile('test/fixtures/swatch-hsb.aco');
@@ -44,7 +44,7 @@ describe(bgBlue.whiteBright('aco'), () => {
 
 	});
 
-	describe(underline.bold('decoding LAB swatches'), async () => {
+	describe(underline(bold('decoding LAB swatches')), async () => {
 
 		before(async () => {
 			swatch = await readFile('test/fixtures/swatch-lab.aco');
@@ -56,7 +56,7 @@ describe(bgBlue.whiteBright('aco'), () => {
 
 	});
 
-	describe(underline.bold('encoding'), async () => {
+	describe(underline(bold('encoding')), async () => {
 
 		before(async () => {
 			swatch = await readFile('test/fixtures/swatch-bw.aco');
