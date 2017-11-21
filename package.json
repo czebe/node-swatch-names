@@ -1,6 +1,6 @@
 {
   "name": "node-swatch-names",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "Swatch-names automatically and consistently names Photoshop swatches to be shared among frontend developers and designers. Exports colors to SASS variables and JSON for use in code.",
   "repository": "https://github.com/czebe/node-swatch-names",
   "main": "index.js",
